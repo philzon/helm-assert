@@ -1,0 +1,50 @@
+# This is a YAML-formatted file.
+# This file is used to test the example chart.
+
+tests:
+  - name: "FAIL_TC_001"
+    selection:
+      kinds:
+        - Deployment
+    asserts:
+      - exist:
+          key: "spec.template.spec.containers[0].ports"
+      - equal:
+          key: "spec.template.spec.containers[0].ports[0].name"
+          value: "http"
+      - equal:
+          key: "spec.template.spec.containers[0].ports[1].name"
+          value: "https"
+      - equal:
+          key: "spec.template.spec.containers[0].ports[0].containerPort"
+          value: "80"
+      - equal:
+          key: "spec.template.spec.containers[0].ports[0].protocol"
+          value: "TCP"
+
+  - name: "UNIT_TC_001"
+    description: "Test replicaCount value"
+    sets:
+      - "replicaCount=10"
+    selection:
+      files:
+        - "deployment.yaml"
+    asserts:
+      - exist:
+          key: "spec.replicas"
+      - equal:
+          key: "spec.replicas"
+          value: "10"
+  - name: "UNIT_TC_002"
+    description: "Test replicaCount value"
+    sets:
+      - "replicaCount=0"
+    selection:
+      kinds:
+        - "Deployment"
+    asserts:
+      - exist:
+          key: "spec.replicas"
+      - equal:
+          key: "spec.replicas"
+          value: "0"
