@@ -1,0 +1,8 @@
+name: "assert"
+version: "0.1.0"
+usage: ""
+description: ""
+command: "$HELM_PLUGIN_DIR/bin/assert"
+hooks:
+  install: "cd $HELM_PLUGIN_DIR; scripts/install.sh"
+  update: "cd $HELM_PLUGIN_DIR; scripts/install.sh"
