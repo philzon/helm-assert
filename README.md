@@ -3,6 +3,7 @@
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/philzon/helm-assert/ci?style=flat-square)
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/philzon/helm-assert?style=flat-square)
 ![GitHub](https://img.shields.io/github/license/philzon/helm-assert?style=flat-square)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fphilzon%2Fhelm-assert.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fphilzon%2Fhelm-assert?ref=badge_shield)
 
 **assert** is a plugin for [Helm](https://github.com/helm/helm).
 
@@ -53,3 +54,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) on how to contribute.
 ## License
 
 See [LICENSE](LICENSE) for project license.
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fphilzon%2Fhelm-assert.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fphilzon%2Fhelm-assert?ref=badge_large)
