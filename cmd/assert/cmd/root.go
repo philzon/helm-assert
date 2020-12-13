@@ -46,12 +46,7 @@ var (
 
 // Execute runs root command.
 func Execute() {
-	err := newRootCmd().Execute()
-
-	if err != nil {
-		fmt.Println(err.Error())
-		os.Exit(1)
-	}
+	newRootCmd().Execute()
 }
 
 func dieOnError(err error) {
