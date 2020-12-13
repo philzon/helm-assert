@@ -1,9 +1,7 @@
-name: "CI"
+name: "Pull Requests"
 
 on:
-  push:
-    branches:
-      - "master"
+  - "pull_request"
 
 jobs:
   build-linux:
