@@ -153,10 +153,6 @@ func initConfig(configPath string, skips []string) (*config.Config, error) {
 		// Apply global sets and values to tests.
 		cfg.Tests[i].Sets = append(cfg.Tests[i].Sets, cfg.Sets...)
 		cfg.Tests[i].Values = append(cfg.Tests[i].Values, cfg.Values...)
-
-		for _, v := range cfg.Tests[i].Values {
-			fmt.Println(v)
-		}
 	}
 
 	return cfg, nil
