@@ -15,7 +15,7 @@ then
 	ARCH="amd64"
 fi
 
-URL="https://github.com/philzon/helm-assert/releases/download/v${VERSION}/assert-v${VERSION}-${KERNEL}-${ARCH}.tar.gz"
+URL="https://github.com/philzon/helm-assert/releases/download/v${VERSION}/${NAME}-v${VERSION}-${KERNEL}-${ARCH}.tar.gz"
 
 echo "${URL}"
 
