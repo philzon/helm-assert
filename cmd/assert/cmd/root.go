@@ -58,7 +58,7 @@ func dieOnError(err error) {
 
 func newRootCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use: fmt.Sprintf("%s %s %s", app.Name, "CONFIG", "CHART"),
+		Use: fmt.Sprintf("%s [%s] [%s]", app.Name, "CONFIG", "CHART"),
 		Run: func(cmd *cobra.Command, args []string) {
 			if len(args) != 2 {
 				cmd.Usage()
