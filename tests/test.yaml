@@ -23,3 +23,15 @@ tests:
       - equal:
           key: "kind"
           value: "Deployment"
+
+###############################################################
+
+  - name: "TC_UNIT_003"
+    description: "Test selection on API version apps/v1"
+    selection:
+      versions:
+        - "apps/v1"
+    asserts:
+      - equal:
+          key: "apiVersion"
+          value: "apps/v1"
