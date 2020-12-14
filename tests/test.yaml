@@ -11,3 +11,15 @@ tests:
       - equal:
           key: "kind"
           value: "Deployment"
+
+###############################################################
+
+  - name: "TC_UNIT_002"
+    description: "Test selection on resource kind Deployment"
+    selection:
+      kinds:
+        - "Deployment"
+    asserts:
+      - equal:
+          key: "kind"
+          value: "Deployment"
