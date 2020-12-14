@@ -2,3 +2,12 @@
 # This file is used to test the example chart.
 
 tests:
+  - name: "TC_UNIT_001"
+    description: "Test selection on file deployment.yaml"
+    selection:
+      files:
+        - "deployment.yaml"
+    asserts:
+      - equal:
+          key: "kind"
+          value: "Deployment"
