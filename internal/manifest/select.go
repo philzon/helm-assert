@@ -73,7 +73,7 @@ func GetManifestsByAPIVersions(manifests []Manifest, apiVersions []string) []Man
 		for _, apiVersion := range apiVersions {
 			tree, _ := simpleyaml.NewYaml(manifest.Data)
 
-			value, err := yaml.Get(keyKind, tree)
+			value, err := yaml.Get(keyAPIVersion, tree)
 
 			if err != nil {
 				break
