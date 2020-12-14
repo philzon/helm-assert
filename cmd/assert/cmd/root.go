@@ -244,7 +244,7 @@ func renderManifests(chrt *chart.Chart, test *config.Test) ([]manifest.Manifest,
 	// Generate values for the rendering engine to use.
 	// This covers for both sets (--set) and values (--values).
 	valueOpts := values.Options{}
-	valueOpts.StringValues = append(valueOpts.StringValues, test.Sets...)
+	valueOpts.Values = append(valueOpts.StringValues, test.Sets...)
 	valueOpts.ValueFiles = append(valueOpts.ValueFiles, test.Values...)
 
 	vals, err := valueOpts.MergeValues(getter.All(v3.Settings))
