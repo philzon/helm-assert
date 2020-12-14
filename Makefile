@@ -22,6 +22,9 @@ clean:
 init:
 	@mkdir --parent $(BINDIR)
 
+dependencies:
+	@go mod download
+
 lint:
 	@go vet ./...
 
