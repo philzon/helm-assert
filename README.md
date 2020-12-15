@@ -141,4 +141,5 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) on how to contribute.
 
 ## License
 
-See [LICENSE](LICENSE) for project license.
+This project licensed under Apache License 2.0.
+See [LICENSE](LICENSE) for the full license details.
