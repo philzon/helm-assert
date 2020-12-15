@@ -75,13 +75,17 @@ Using default target `build` will always build based on the current system.
 
 ## Usage
 
+Running **assert** without providing arguments, or using either `--help, -h` flags, will output its usage.
+
+To access it directly from Helm:
+
 ```txt
 $ helm assert
 ```
 
 ```txt
 Usage:
-  assert CONFIG CHART [flags]
+  assert [CONFIG] [CHART] [flags]
 
 Flags:
   -l, --log-level string     severity level to log ("verbose"|"standard"|"quiet"|"none") (default "normal")
