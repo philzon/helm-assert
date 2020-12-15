@@ -10,6 +10,7 @@
 ## Table of Contents
 
 - [Install](#install)
+- [Build](#build)
 - [Usage](#usage)
 - [Documentation](#documentation)
 - [Contributing](#contributing)
@@ -36,7 +37,7 @@ $ helm plugin update assert
 ### Standalone
 
 It is possible to install as a standalone tool using `make` without requiring the use of Helm.
-This requires that the source has been built.
+This requires that the source has been built, see [Build](#build) section.
 
 The installation path is set to be installed in `/usr/local/bin` by default.
 You can invoke `make INSDIR="/new/install/path"` to override its path.
@@ -50,6 +51,27 @@ To uninstall the binary:
 ```txt
 # make uninstall
 ```
+
+## Build
+
+This project is using Golang to both build the project and manage dependencies using Go modules.
+
+To build the source using `make`:
+
+```txt
+$ make clean all
+```
+
+All built resources will be placed in the `bin/` directory.
+
+To build for different systems, the following targets are available:
+
+- `build-linux-amd64` - x86 64-bit GNU/Linux systems (most).
+- `build-linux-arm64` - ARM based 64-bit GNU/Linux systems (most).
+- `build-windows-amd64` - x86 64-bit Windows systems.
+- `build-darwin-amd64` - x86 64-bit OSX systems.
+
+Using default target `build` will always build based on the current system.
 
 ## Usage
 
