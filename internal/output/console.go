@@ -25,10 +25,10 @@ func ConsoleSimple(testReport report.Test) {
 	if testReport.Score.Failed != 0 {
 		logrus.Errorf("%s %s", StatusFailed, testReport.Name)
 
-		if testReport.Description != "" {
+		if testReport.Summary != "" {
 			logrus.Errorf("")
 
-			for _, line := range strings.Split(strings.TrimSpace(testReport.Description), "\n") {
+			for _, line := range strings.Split(strings.TrimSpace(testReport.Summary), "\n") {
 				logrus.Errorf("    %s", line)
 			}
 		}
@@ -59,10 +59,10 @@ func ConsoleSimple(testReport report.Test) {
 		//
 		// TODO: remove duplication and find a better way to present in the same manner
 		// as error but using this log level.
-		if testReport.Description != "" {
+		if testReport.Summary != "" {
 			logrus.Debugf("")
 
-			for _, line := range strings.Split(strings.TrimSpace(testReport.Description), "\n") {
+			for _, line := range strings.Split(strings.TrimSpace(testReport.Summary), "\n") {
 				logrus.Debugf("    %s", line)
 			}
 		}

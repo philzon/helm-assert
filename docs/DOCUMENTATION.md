@@ -22,8 +22,8 @@ tests:
     # Test case name.
   - name: "TC_001"
 
-    # Test case description.
-    description: "Test example"
+    # Summary of what the test case does.
+    summary: "Test example"
 
     # Test case level sets.
     sets:

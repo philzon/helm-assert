@@ -15,7 +15,7 @@ import (
 func RunTest(manifests []manifest.Manifest, test *config.Test) report.Test {
 	testReport := report.NewTest()
 	testReport.Name = test.Name
-	testReport.Description = test.Description
+	testReport.Summary = test.Summary
 	testReport.Score.Total = len(test.Asserts)
 
 	// Fail test cases when no sources are presented.
