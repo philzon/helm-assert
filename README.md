@@ -49,7 +49,7 @@ It is possible to install as a standalone tool using `make` without requiring th
 This requires that the source has been built, see [Build](#build) section.
 
 The installation path is set to be installed in `/usr/local/bin` by default.
-You can invoke `make INSDIR="/new/install/path"` to override its path.
+You can invoke `make INSDIR="/new/install/path" ...` to override its path.
 
 ```txt
 # make install
@@ -71,14 +71,14 @@ To build the source using `make`:
 $ make clean all
 ```
 
-All built resources will be placed in the `bin/` directory.
+Built artifacts will be placed in the `bin/` directory.
 
 To build for different systems, the following targets are available:
 
-- `build-linux-amd64` - x86 64-bit GNU/Linux systems (most).
-- `build-linux-arm64` - ARM based 64-bit GNU/Linux systems (most).
-- `build-windows-amd64` - x86 64-bit Windows systems.
-- `build-darwin-amd64` - x86 64-bit OSX systems.
+- `build-linux-amd64` x86 64-bit GNU/Linux systems (most).
+- `build-linux-arm64` ARM based 64-bit GNU/Linux systems (most).
+- `build-windows-amd64` x86 64-bit Windows systems.
+- `build-darwin-amd64` x86 64-bit OSX systems.
 
 Using default target `build` will always build based on the current system.
 
@@ -86,7 +86,7 @@ Using default target `build` will always build based on the current system.
 
 Running **assert** without providing arguments, or using either `--help, -h` flags, will output its usage.
 
-To access it directly from Helm:
+To access it directly from Helm, if used as a plugin:
 
 ```txt
 $ helm assert
