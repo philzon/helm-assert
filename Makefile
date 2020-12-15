@@ -45,7 +45,7 @@ build-linux-arm64:
 	@mkdir --parent $(BINDIR)/linux-arm64
 	@cp plugin.yaml $(BINDIR)/linux-arm64
 	@cp LICENSE $(BINDIR)/linux-arm64
-	@GOOS=linux GOARCH=amd64 go build -o $(BINDIR)/linux-arm64/$(NAME) -ldflags '$(CFLAGS)' cmd/$(NAME)/*.go
+	@GOOS=linux GOARCH=arm64 go build -o $(BINDIR)/linux-arm64/$(NAME) -ldflags '$(CFLAGS)' cmd/$(NAME)/*.go
 
 build-windows-amd64:
 	@mkdir --parent $(BINDIR)/windows-amd64
