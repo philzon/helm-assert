@@ -9,16 +9,46 @@
 
 ## Table of Contents
 
-- [Installing](#installing)
+- [Install](#install)
 - [Usage](#usage)
 - [Documentation](#documentation)
 - [Contributing](#contributing)
 - [License](#license)
 
-## Installing
+## Install
+
+Pre-built binaries for various systems can be found in [Releases](https://github.com/philzon/helm-assert/releases) section.
+
+### Helm
+
+The plugin can be installed using Helm's plugin command:
 
 ```txt
 $ helm plugin install https://github.com/philzon/helm-assert.git
+```
+
+Using Helm to update the plugin will always fetch the latest version published:
+
+```txt
+$ helm plugin update assert
+```
+
+### Standalone
+
+It is possible to install as a standalone tool using `make` without requiring the use of Helm.
+This requires that the source has been built.
+
+The installation path is set to be installed in `/usr/local/bin` by default.
+You can invoke `make INSDIR="/new/install/path"` to override its path.
+
+```txt
+# make install
+```
+
+To uninstall the binary:
+
+```txt
+# make uninstall
 ```
 
 ## Usage
