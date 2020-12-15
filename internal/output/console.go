@@ -7,6 +7,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// Status strings for reporting test case results.
 const (
 	StatusFailed  = "FAIL"
 	StatusPassed  = "PASS"
