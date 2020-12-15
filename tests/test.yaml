@@ -4,7 +4,7 @@
 tests:
   - name: "TC_UNIT_001"
     description: "Test selection on file deployment.yaml"
-    selection:
+    select:
       files:
         - "deployment.yaml"
     asserts:
@@ -16,7 +16,7 @@ tests:
 
   - name: "TC_UNIT_002"
     description: "Test selection on resource kind Deployment"
-    selection:
+    select:
       kinds:
         - "Deployment"
     asserts:
@@ -28,7 +28,7 @@ tests:
 
   - name: "TC_UNIT_003"
     description: "Test selection on API version apps/v1"
-    selection:
+    select:
       versions:
         - "apps/v1"
     asserts:
@@ -40,7 +40,7 @@ tests:
 
   - name: "TC_UNIT_004"
     description: "Test selection on unamed manifests"
-    selection:
+    select:
       kinds:
         - "ConfigMap"
     asserts:

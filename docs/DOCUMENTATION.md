@@ -33,8 +33,8 @@ tests:
     values:
       - tc-001-values.yaml
 
-    selection:
-      # Select manifests by file (unamed manifests will not be included if used).
+    select:
+      # Select manifests by filename (unamed manifests will not be included if used).
       files:
         - "deployment.yaml"
       # Select manifests based on its kind.
