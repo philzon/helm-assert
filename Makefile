@@ -1,6 +1,7 @@
 MODULE  := github.com/philzon/helm-assert
 NAME    := assert
 BINDIR  := bin
+INSDIR  := /usr/local/bin
 VERSION := $(shell cat plugin.yaml | grep "version" | cut -d '"' -f 2)
 COMMIT  := $(shell git rev-parse --short HEAD)
 DATE    := $(shell date +"%Y-%m-%d %H:%M:%S")
@@ -12,7 +13,7 @@ CFLAGS  := -X "$(MODULE)/internal/app.Name=$(NAME)" \
            -s \
            -w \
 
-.PHONY: all init lint build build-linux-amd64 build-linux-arm64 build-windows-amd64 build-darwin-amd64 test package
+.PHONY: all init lint build build-linux-amd64 build-linux-arm64 build-windows-amd64 build-darwin-amd64 test package install uninstall
 
 all: init build
 
@@ -64,3 +65,12 @@ test:
 
 package:
 	@./scripts/package.sh $(BINDIR)
+
+install:
+	@mkdir -p $(INSDIR)
+	@cp ./$(BINDIR)/$(NAME) $(INSDIR)/$(NAME)
+	@echo "Installed $(INSDIR)/$(NAME)"
+
+uninstall:
+	@rm $(INSDIR)/$(NAME)
+	@echo "Uninstalled $(INSDIR)/$(NAME)"
