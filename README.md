@@ -7,6 +7,14 @@
 
 **assert** is a plugin for [Helm](https://github.com/helm/helm) (or a standalone tool) to verify the Helm chart's rendered manifests.
 
+## Features
+
+- Render Helm charts from repositories or locally from the file system.
+- Override values per test case (or globally) using sets from a list, or files, when rendering.
+- Sort manifests by files, Kubernetes resource kinds or API versions for test cases.
+- Verify the rendered manifest's YAML by checking for key's values or if they exists using asserts.
+- Write test report to file as JSON to be processed.
+
 ## Table of Contents
 
 - [Install](#install)
