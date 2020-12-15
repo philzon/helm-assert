@@ -9,6 +9,7 @@
 
 ## Features
 
+- YAML-based test configurations.
 - Render Helm charts from repositories or locally from the file system.
 - Override values per test case (or globally) using sets from a list, or files, when rendering.
 - Sort manifests by files, Kubernetes resource kinds or API versions for test cases.
