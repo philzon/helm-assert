@@ -35,3 +35,15 @@ tests:
       - equal:
           key: "apiVersion"
           value: "apps/v1"
+
+###############################################################
+
+  - name: "TC_UNIT_004"
+    description: "Test selection on unamed manifests"
+    selection:
+      kinds:
+        - "ConfigMap"
+    asserts:
+      - equal:
+          key: "kind"
+          value: "ConfigMap"

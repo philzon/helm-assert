@@ -274,7 +274,18 @@ func renderManifests(chrt *chart.Chart, test *config.Test) ([]manifest.Manifest,
 
 	for name, data := range renderedManifests {
 		if len(data) != 0 {
-			manifests = append(manifests, manifest.NewManifestFromData(name, []byte(data)))
+			// Separate the unamed YAML documents into their own manifests.
+			documents := manifest.SplitDocument(data)
+
+			for index, document := range documents {
+				// First content split is always the named one to be referenced later
+				// in the selection process for tests.
+				if index == 0 {
+					manifests = append(manifests, manifest.NewManifestFromData(name, []byte(document)))
+				} else {
+					manifests = append(manifests, manifest.NewManifestFromData("", []byte(document)))
+				}
+			}
 		}
 	}
 
