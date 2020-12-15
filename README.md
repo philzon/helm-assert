@@ -110,7 +110,30 @@ Flags:
 
 ## Documentation
 
-See [DOCUMENTATION.md](./docs/DOCUMENTATION.md) for documentation.
+For a detailed overview of the tool, see [docs/DOCUMENTATION.md](./docs/DOCUMENTATION.md) page.
+
+### Quick Start
+
+Test configurations are written in YAML.
+Each test case defines what values to override, which manifests to select, and then, which keys to check and how.
+
+Below configuration tests if manifests, with resource kind `Deployment`, has its **first** container's image changed based on the values overriden using `sets`.
+
+```yaml
+tests:
+  - name: TC_001
+    summary: Test if image is being set
+    sets:
+      - image.repository=nginx
+      - image.tag=latest
+    select:
+      kinds:
+        - Deployment
+    asserts:
+      - equal:
+          key: spec.template.spec.containers[0].image
+          value: nginx:latest
+```
 
 ## Contributing
 
