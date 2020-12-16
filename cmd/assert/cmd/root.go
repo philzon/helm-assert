@@ -255,7 +255,7 @@ func renderManifests(chrt *chart.Chart, test *config.Test) ([]manifest.Manifest,
 	}
 
 	// Set default release options. This will then result in both values from
-	// Chart.Release and Chart.Namespace to be set.
+	// Release.Name and Release.Namespace to be set.
 	options := chartutil.ReleaseOptions{
 		Name:      "RELEASE",
 		Namespace: "NAMESPACE",
