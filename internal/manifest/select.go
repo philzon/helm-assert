@@ -44,7 +44,13 @@ func GetManifestsByKinds(manifests []Manifest, kinds []string) []Manifest {
 
 	for _, manifest := range manifests {
 		for _, kind := range kinds {
-			tree, _ := simpleyaml.NewYaml(manifest.Data)
+			tree, err := simpleyaml.NewYaml(manifest.Data)
+
+			// Fail silently on YAML error. This should be checked before selecting
+			// by kind(s).
+			if err != nil {
+				continue
+			}
 
 			value, err := yaml.Get(keyKind, tree)
 
@@ -71,7 +77,13 @@ func GetManifestsByAPIVersions(manifests []Manifest, apiVersions []string) []Man
 
 	for _, manifest := range manifests {
 		for _, apiVersion := range apiVersions {
-			tree, _ := simpleyaml.NewYaml(manifest.Data)
+			tree, err := simpleyaml.NewYaml(manifest.Data)
+
+			// Fail silently on YAML error. This should be checked before selecting
+			// by apiVersion(s).
+			if err != nil {
+				continue
+			}
 
 			value, err := yaml.Get(keyAPIVersion, tree)
 
