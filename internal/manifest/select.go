@@ -2,9 +2,9 @@ package manifest
 
 import (
 	"path/filepath"
+	"strings"
 
-	"github.com/philzon/helm-assert/internal/yaml"
-	"github.com/smallfish/simpleyaml"
+	yaml "github.com/goccy/go-yaml"
 )
 
 const (
@@ -44,7 +44,8 @@ func GetManifestsByKinds(manifests []Manifest, kinds []string) []Manifest {
 
 	for _, manifest := range manifests {
 		for _, kind := range kinds {
-			tree, err := simpleyaml.NewYaml(manifest.Data)
+			path, _ := yaml.PathString("$." + keyKind)
+			node, err := path.ReadNode(strings.NewReader(string(manifest.Data)))
 
 			// Fail silently on YAML error. This should be checked before selecting
 			// by kind(s).
@@ -52,13 +53,11 @@ func GetManifestsByKinds(manifests []Manifest, kinds []string) []Manifest {
 				continue
 			}
 
-			value, err := yaml.Get(keyKind, tree)
-
-			if err != nil {
+			if node == nil {
 				break
 			}
 
-			if value == kind {
+			if node.String() == kind {
 				selected = append(selected, manifest)
 			}
 		}
@@ -77,21 +76,20 @@ func GetManifestsByAPIVersions(manifests []Manifest, apiVersions []string) []Man
 
 	for _, manifest := range manifests {
 		for _, apiVersion := range apiVersions {
-			tree, err := simpleyaml.NewYaml(manifest.Data)
+			path, _ := yaml.PathString("$." + keyAPIVersion)
+			node, err := path.ReadNode(strings.NewReader(string(manifest.Data)))
 
 			// Fail silently on YAML error. This should be checked before selecting
-			// by apiVersion(s).
+			// by kind(s).
 			if err != nil {
 				continue
 			}
 
-			value, err := yaml.Get(keyAPIVersion, tree)
-
-			if err != nil {
+			if node == nil {
 				break
 			}
 
-			if value == apiVersion {
+			if node.String() == apiVersion {
 				selected = append(selected, manifest)
 			}
 		}

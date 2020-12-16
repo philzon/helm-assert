@@ -2,20 +2,23 @@ package runner
 
 import (
 	"fmt"
+	"strings"
 
-	"github.com/philzon/helm-assert/internal/yaml"
-	"github.com/smallfish/simpleyaml"
+	yaml "github.com/goccy/go-yaml"
+	"github.com/goccy/go-yaml/ast"
 )
 
 // AssertExist returns true if the given key exists.
-func AssertExist(key string, tree *simpleyaml.Yaml) (string, bool) {
-	result, err := yaml.Exist(key, tree)
+func AssertExist(key string, data []byte) (string, bool) {
+	path, err := yaml.PathString("$." + key)
 
 	if err != nil {
-		return fmt.Sprintf("parse error - %s", err.Error()), false
+		return fmt.Sprintf("parse error - %s", yaml.FormatError(err, false, false)), false
 	}
 
-	if result {
+	node, _ := path.ReadNode(strings.NewReader(string(data)))
+
+	if node != nil {
 		return fmt.Sprintf("key exist '%s'", key), true
 	}
 
@@ -23,14 +26,28 @@ func AssertExist(key string, tree *simpleyaml.Yaml) (string, bool) {
 }
 
 // AssertEqual returns true if the given key matches the value provided.
-func AssertEqual(key, value string, tree *simpleyaml.Yaml) (string, bool) {
-	result, err := yaml.Get(key, tree)
+func AssertEqual(key, value string, data []byte) (string, bool) {
+	path, err := yaml.PathString("$." + key)
 
 	if err != nil {
-		return fmt.Sprintf("parse error - %s", err.Error()), false
+		return fmt.Sprintf("parse error - %s", yaml.FormatError(err, false, false)), false
 	}
 
-	if value == result {
+	result := ""
+	node, _ := path.ReadNode(strings.NewReader(string(data)))
+
+	if node != nil {
+		switch node.Type() {
+		case ast.MappingType:
+			result = "{...}"
+		case ast.SequenceType:
+			result = "[...]"
+		default:
+			result = node.String()
+		}
+	}
+
+	if result == value {
 		return fmt.Sprintf("got '%s' in key '%s'", result, key), true
 	}
 

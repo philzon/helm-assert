@@ -3,8 +3,6 @@ package runner
 import (
 	"strings"
 
-	"github.com/smallfish/simpleyaml"
-
 	"github.com/philzon/helm-assert/internal/manifest"
 	"github.com/philzon/helm-assert/pkg/config"
 	"github.com/philzon/helm-assert/pkg/report"
@@ -45,26 +43,17 @@ func RunTest(manifests []manifest.Manifest, test *config.Test) report.Test {
 
 // RunAssert executes all asserts against all sources.
 func RunAssert(manifest *manifest.Manifest, assert *config.Assert) report.Assert {
-	tree, err := simpleyaml.NewYaml(manifest.Data)
-
-	if err != nil {
-		return report.Assert{
-			Message: "Could not parse below YAML:\n\n%s\n",
-			Passed:  false,
-		}
-	}
-
 	assertReport := report.Assert{}
 
 	var message string
 	var passed bool
 
 	if len(strings.TrimSpace(assert.Exist.Key)) > 0 {
-		message, passed = AssertExist(assert.Exist.Key, tree)
+		message, passed = AssertExist(assert.Exist.Key, manifest.Data)
 	}
 
 	if len(strings.TrimSpace(assert.Equal.Key)) > 0 {
-		message, passed = AssertEqual(assert.Equal.Key, assert.Equal.Value, tree)
+		message, passed = AssertEqual(assert.Equal.Key, assert.Equal.Value, manifest.Data)
 	}
 
 	assertReport.Message = message
