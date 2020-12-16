@@ -51,11 +51,17 @@ tests:
 ###############################################################
 
   - name: "TC_UNIT_005"
-    summary: "Test first index of an array"
+    summary: "Test fetching balues from arrays"
     select:
       kinds:
         - "Deployment"
     asserts:
       - equal:
           key: "spec.template.spec.containers[0].name"
-          value: "chart-example"
+          value: "chart-example-1"
+      - equal:
+          key: "spec.template.spec.containers[1].name"
+          value: "chart-example-2"
+      - equal:
+          key: "spec.template.spec.containers[2].name"
+          value: "chart-example-3"
