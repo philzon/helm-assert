@@ -47,3 +47,15 @@ tests:
       - equal:
           key: "kind"
           value: "ConfigMap"
+
+###############################################################
+
+  - name: "TC_UNIT_005"
+    summary: "Test first index of an array"
+    select:
+      kinds:
+        - "Deployment"
+    asserts:
+      - equal:
+          key: "spec.template.spec.containers[0].name"
+          value: "chart-example"
