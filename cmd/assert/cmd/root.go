@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -273,6 +274,14 @@ func renderManifests(chrt *chart.Chart, test *config.Test) ([]manifest.Manifest,
 	}
 
 	for name, data := range renderedManifests {
+		// Only accept manifests from files that has YAML extension. This is to also
+		// prevent non-template files, like NOTES.txt.
+		ext := filepath.Ext(name)
+
+		if ext != ".yaml" && ext != ".yml" {
+			continue
+		}
+
 		if len(data) != 0 {
 			// Separate the unamed YAML documents into their own manifests.
 			documents := manifest.SplitDocument(data)
