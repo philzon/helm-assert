@@ -275,7 +275,7 @@ func renderManifests(chrt *chart.Chart, test *config.Test) ([]manifest.Manifest,
 
 	for name, data := range renderedManifests {
 		// Only accept manifests from files that has YAML extension. This is to also
-		// prevent non-template files, like NOTES.txt.
+		// prevent non-template files, like NOTES.txt, from being parsed as YAML later.
 		ext := filepath.Ext(name)
 
 		if ext != ".yaml" && ext != ".yml" {
