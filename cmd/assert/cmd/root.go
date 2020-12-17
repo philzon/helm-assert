@@ -103,10 +103,10 @@ func newRootCmd() *cobra.Command {
 }
 
 func addRootFlags(cmd *cobra.Command) {
-	cmd.PersistentFlags().BoolVarP(&json, "json", "", false, "Report should be saved in JSON format")
+	cmd.PersistentFlags().BoolVarP(&json, "json", "", false, "report should be saved in JSON format")
 	cmd.PersistentFlags().StringVarP(&logLevel, "log-level", "l", "standard", "severity level to log (\"verbose\"|\"standard\"|\"quiet\"|\"none\")")
-	cmd.PersistentFlags().StringVarP(&out, "output", "o", "report", "Path to store reports to")
-	cmd.PersistentFlags().StringArrayVarP(&skips, "skip", "", []string{}, "Skip test by name (can specify multiple)")
+	cmd.PersistentFlags().StringVarP(&out, "output", "o", "report", "path to store reports to")
+	cmd.PersistentFlags().StringArrayVarP(&skips, "skip", "", []string{}, "skip test by name (can specify multiple)")
 
 	// Replicated Helm flags.
 	cmd.PersistentFlags().StringVarP(&password, "password", "", "", "chart repository password where to locate the requested chart")

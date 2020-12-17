@@ -97,15 +97,15 @@ Usage:
   assert [CONFIG] [CHART] [flags]
 
 Flags:
-  -l, --log-level string     severity level to log ("verbose"|"standard"|"quiet"|"none") (default "normal")
-  -h, --help                 help for assert
-      --json                 Report should be saved in JSON format
-  -o, --output string        Path to store reports to (default "report")
-      --password string      chart repository password where to locate the requested chart
-      --repo string          chart repository url where to locate the requested chart
-      --skip stringArray     Skip test by name (can specify multiple)
-      --username string      chart repository username where to locate the requested chart
-      --version string       specify the exact chart version to use. If this is not specified, the latest version is used
+  -h, --help               help for assert
+      --json               report should be saved in JSON format
+  -l, --log-level string   severity level to log ("verbose"|"standard"|"quiet"|"none") (default "standard")
+  -o, --output string      path to store reports to (default "report")
+      --password string    chart repository password where to locate the requested chart
+      --repo string        chart repository url where to locate the requested chart
+      --skip stringArray   skip test by name (can specify multiple)
+      --username string    chart repository username where to locate the requested chart
+      --version string     specify the exact chart version to use. If this is not specified, the latest version is used
 ```
 
 ## Documentation
