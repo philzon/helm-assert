@@ -216,12 +216,10 @@ func runAssert(cfg *config.Config, chrt *chart.Chart) error {
 		if testReport.Skipped {
 			rep.Score.Skipped++
 		} else {
-			if testReport.Score.Failed > 0 {
-				rep.Score.Failed++
+			if testReport.Passed {
+				rep.Score.Passed++
 			} else {
-				if testReport.Score.Passed > 0 {
-					rep.Score.Passed++
-				}
+				rep.Score.Failed++
 			}
 		}
 
