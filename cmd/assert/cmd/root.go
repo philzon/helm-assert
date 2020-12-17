@@ -283,17 +283,17 @@ func renderManifests(chrt *chart.Chart, test *config.Test) ([]manifest.Manifest,
 		}
 
 		if len(data) != 0 {
-			// Separate the unamed YAML documents into their own manifests.
+			// Create manifests for each document present in a rendered manifest. These
+			// manifests will still use the same filename from the file they were split
+			// from.
+			//
+			// If there are multiple documents in a single manifest, and contain different
+			// Kubernetes resource kinds, selecting by file will fail the assert, and so
+			// must also be selected by resource kind.
 			documents := manifest.SplitDocument(data)
 
-			for index, document := range documents {
-				// First content split is always the named one to be referenced later
-				// in the selection process for tests.
-				if index == 0 {
-					manifests = append(manifests, manifest.NewManifestFromData(name, []byte(document)))
-				} else {
-					manifests = append(manifests, manifest.NewManifestFromData("", []byte(document)))
-				}
+			for _, document := range documents {
+				manifests = append(manifests, manifest.NewManifestFromData(name, []byte(document)))
 			}
 		}
 	}

@@ -7,6 +7,10 @@ tests:
     select:
       files:
         - "deployment.yaml"
+      # Since there are multiple directives used, we have to
+      # sort by resource kind.
+      kinds:
+        - "Deployment"
     asserts:
       - equal:
           key: "kind"
