@@ -23,7 +23,7 @@ func ConsoleSimple(testReport report.Test) {
 		return
 	}
 
-	if testReport.Score.Failed != 0 {
+	if !testReport.Passed {
 		logrus.Errorf("%s %s", StatusFailed, testReport.Name)
 
 		if testReport.Summary != "" {

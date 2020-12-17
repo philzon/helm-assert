@@ -15,6 +15,7 @@ func RunTest(manifests []manifest.Manifest, test *config.Test) report.Test {
 	testReport.Name = test.Name
 	testReport.Summary = test.Summary
 	testReport.Score.Total = len(test.Asserts)
+	testReport.Passed = true
 
 	// Fail test cases when no sources are presented.
 	if len(manifests) == 0 || test.Skip {
@@ -36,6 +37,10 @@ func RunTest(manifests []manifest.Manifest, test *config.Test) report.Test {
 
 			testReport.Asserts = append(testReport.Asserts, assertReport)
 		}
+	}
+
+	if testReport.Score.Failed > 0 {
+		testReport.Passed = false
 	}
 
 	return testReport

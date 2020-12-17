@@ -3,6 +3,7 @@ package report
 // Test contains test information and results.
 type Test struct {
 	Name    string   `json:"name"`
+	Passed  bool     `json:"passed"`
 	Summary string   `json:"summary"`
 	Skipped bool     `json:"skipped"`
 	Asserts []Assert `json:"asserts"`
