@@ -126,7 +126,7 @@ func initConfig(configPath string, skips []string) (*config.Config, error) {
 	err = yaml.Unmarshal(data, cfg)
 
 	if err != nil {
-		return nil, fmt.Errorf("could not parse config YAML: %s", err.Error())
+		return nil, fmt.Errorf("could not parse config YAML: %s", yaml.FormatError(err, false, true))
 	}
 
 	// Put all skip strings in a map and iterate all tests and enable
