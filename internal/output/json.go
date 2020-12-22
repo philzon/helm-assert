@@ -2,7 +2,6 @@ package output
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 
 	"github.com/philzon/helm-assert/pkg/report"
@@ -10,7 +9,7 @@ import (
 
 // JSON takes a path and the test report and writes it to a file as JSON.
 func JSON(path string, rep *report.Report) error {
-	file, err := os.Create(fmt.Sprintf("%s.json", path))
+	file, err := os.Create(path)
 
 	if err != nil {
 		return err

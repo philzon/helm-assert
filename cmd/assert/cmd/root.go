@@ -35,7 +35,7 @@ var (
 	configPath string
 
 	// Command flags.
-	json     bool
+	json     string
 	logLevel string
 	out      string
 	password string
@@ -103,9 +103,8 @@ func newRootCmd() *cobra.Command {
 }
 
 func addRootFlags(cmd *cobra.Command) {
-	cmd.PersistentFlags().BoolVarP(&json, "json", "", false, "report should be saved in JSON format")
+	cmd.PersistentFlags().StringVarP(&json, "json", "", "", "write report to a file in JSON format")
 	cmd.PersistentFlags().StringVarP(&logLevel, "log-level", "l", "standard", "severity level to log (\"verbose\"|\"standard\"|\"quiet\"|\"none\")")
-	cmd.PersistentFlags().StringVarP(&out, "output", "o", "report", "path to store reports to")
 	cmd.PersistentFlags().StringArrayVarP(&skips, "skip", "", []string{}, "skip test by name (can specify multiple)")
 
 	// Replicated Helm flags.
@@ -231,8 +230,8 @@ func runAssert(cfg *config.Config, chrt *chart.Chart) error {
 		rep.Tests = append(rep.Tests, testReport)
 	}
 
-	if json {
-		return output.JSON(out, &rep)
+	if json != "" {
+		return output.JSON(json, &rep)
 	}
 
 	return nil

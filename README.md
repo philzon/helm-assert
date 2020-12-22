@@ -98,9 +98,8 @@ Usage:
 
 Flags:
   -h, --help               help for assert
-      --json               report should be saved in JSON format
+      --json string        write report to a file in JSON format
   -l, --log-level string   severity level to log ("verbose"|"standard"|"quiet"|"none") (default "standard")
-  -o, --output string      path to store reports to (default "report")
       --password string    chart repository password where to locate the requested chart
       --repo string        chart repository url where to locate the requested chart
       --skip stringArray   skip test by name (can specify multiple)
