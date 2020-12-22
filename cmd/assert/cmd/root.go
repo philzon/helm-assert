@@ -192,6 +192,7 @@ func getChart(chart string) (*chart.Chart, error) {
 func runAssert(cfg *config.Config, chrt *chart.Chart) error {
 	rep := report.NewReport()
 	rep.Chart.Name = chrt.Name()
+	rep.Chart.Path = chartPath
 	rep.Chart.Version = chrt.Metadata.Version
 	rep.Date = time.Now().Format(time.RFC3339)
 	rep.Score.Total = len(cfg.Tests)
