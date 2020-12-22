@@ -119,7 +119,7 @@ func initConfig(configPath string, skips []string) (*config.Config, error) {
 	data, err := ioutil.ReadFile(configPath)
 
 	if err != nil {
-		return nil, fmt.Errorf("could not open '%s': %s", configPath, err.Error())
+		return nil, err
 	}
 
 	cfg := &config.Config{}
