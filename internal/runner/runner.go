@@ -1,8 +1,6 @@
 package runner
 
 import (
-	"strings"
-
 	"github.com/philzon/helm-assert/internal/manifest"
 	"github.com/philzon/helm-assert/pkg/config"
 	"github.com/philzon/helm-assert/pkg/report"
@@ -51,25 +49,4 @@ func RunTest(manifests []manifest.Manifest, test *config.Test) report.Test {
 	}
 
 	return testReport
-}
-
-// RunAssert executes all asserts against all sources.
-func RunAssert(manifest *manifest.Manifest, assert *config.Assert) report.Assert {
-	assertReport := report.Assert{}
-
-	var output string
-	var passed bool
-
-	if len(strings.TrimSpace(assert.Exist.Key)) > 0 {
-		output, passed = AssertExist(assert.Exist.Key, manifest.Data)
-	}
-
-	if len(strings.TrimSpace(assert.Equal.Key)) > 0 {
-		output, passed = AssertEqual(assert.Equal.Key, assert.Equal.Value, manifest.Data)
-	}
-
-	assertReport.Output = output
-	assertReport.Passed = passed
-
-	return assertReport
 }
