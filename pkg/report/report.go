@@ -2,8 +2,8 @@ package report
 
 // Report contains the overall test report.
 type Report struct {
-	Chart   Chart  `json:"chart"`
 	Date    string `json:"date"`
+	Chart   Chart  `json:"chart"`
 	Score   Score  `json:"score"`
 	Tests   []Test `json:"tests"`
 }

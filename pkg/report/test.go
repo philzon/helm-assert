@@ -3,12 +3,12 @@ package report
 // Test contains test information and results.
 type Test struct {
 	Name      string     `json:"name"`
-	Manifests []Manifest `json:"manifests"`
-	Passed    bool       `json:"passed"`
 	Summary   string     `json:"summary"`
+	Passed    bool       `json:"passed"`
 	Skipped   bool       `json:"skipped"`
-	Asserts   []Assert   `json:"asserts"`
 	Score     Score      `json:"score"`
+	Manifests []Manifest `json:"manifests"`
+	Asserts   []Assert   `json:"asserts"`
 }
 
 // NewTest returns a new instance of Test.

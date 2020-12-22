@@ -1,7 +1,7 @@
 package report
 
 type Chart struct {
-	Name    string `json:"name"`
 	Path    string `json:"path"`
+	Name    string `json:"name"`
 	Version string `json:"version"`
 }
