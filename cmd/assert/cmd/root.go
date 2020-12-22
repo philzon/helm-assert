@@ -52,7 +52,7 @@ func Execute() {
 
 func dieOnError(err error) {
 	if err != nil {
-		fmt.Println(err.Error())
+		fmt.Printf("Fatal: %s\n", err.Error())
 		os.Exit(1)
 	}
 }
