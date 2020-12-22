@@ -25,6 +25,13 @@ func RunTest(manifests []manifest.Manifest, test *config.Test) report.Test {
 	}
 
 	for _, manifest := range manifests {
+		// Add selected manifest name and data to test report.
+		manifestReport := report.Manifest{
+			Path: manifest.Path,
+			Data: string(manifest.Data),
+		}
+		testReport.Manifests = append(testReport.Manifests, manifestReport)
+
 		for index, assert := range test.Asserts {
 			assertReport := RunAssert(&manifest, &assert)
 			assertReport.Index = index
