@@ -39,7 +39,7 @@ func ConsoleSimple(testReport report.Test) {
 
 			for _, assert := range testReport.Asserts {
 				if !assert.Passed {
-					logrus.Errorf("    Assert %d: %s", assert.Index, assert.Message)
+					logrus.Errorf("    Assert %d: %s", assert.Index, assert.Output)
 				}
 			}
 
@@ -72,7 +72,7 @@ func ConsoleSimple(testReport report.Test) {
 			logrus.Debugf("")
 
 			for _, assert := range testReport.Asserts {
-				logrus.Debugf("    Assert %d: %s", assert.Index, assert.Message)
+				logrus.Debugf("    Assert %d: %s", assert.Index, assert.Output)
 			}
 
 			logrus.Debugf("")

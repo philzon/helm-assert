@@ -57,18 +57,18 @@ func RunTest(manifests []manifest.Manifest, test *config.Test) report.Test {
 func RunAssert(manifest *manifest.Manifest, assert *config.Assert) report.Assert {
 	assertReport := report.Assert{}
 
-	var message string
+	var output string
 	var passed bool
 
 	if len(strings.TrimSpace(assert.Exist.Key)) > 0 {
-		message, passed = AssertExist(assert.Exist.Key, manifest.Data)
+		output, passed = AssertExist(assert.Exist.Key, manifest.Data)
 	}
 
 	if len(strings.TrimSpace(assert.Equal.Key)) > 0 {
-		message, passed = AssertEqual(assert.Equal.Key, assert.Equal.Value, manifest.Data)
+		output, passed = AssertEqual(assert.Equal.Key, assert.Equal.Value, manifest.Data)
 	}
 
-	assertReport.Message = message
+	assertReport.Output = output
 	assertReport.Passed = passed
 
 	return assertReport
