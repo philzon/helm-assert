@@ -200,8 +200,14 @@ func runAssert(cfg *config.Config, chrt *chart.Chart) error {
 		// Render all manifests with values from test configuration.
 		manifests, err := renderManifests(chrt, &test)
 
-		// FIXME: possible invalid manifests should be part of test failure
-		// and not fail the whole run.
+		// Any failures when rendering should put the application to a stop.
+		if err != nil {
+			return err
+		}
+
+		// Any failures when verifying the YAML data should put the application to a stop.
+		err = validateManifests(manifests)
+
 		if err != nil {
 			return err
 		}
@@ -297,4 +303,16 @@ func renderManifests(chrt *chart.Chart, test *config.Test) ([]manifest.Manifest,
 	}
 
 	return manifests, nil
+}
+
+func validateManifests(manifests []manifest.Manifest) error {
+	for _, manifest := range manifests {
+		err := yaml.Unmarshal(manifest.Data, new(interface{}))
+
+		if err != nil {
+			return fmt.Errorf("YAML parse error\n%s %s", manifest.Path, yaml.FormatError(err, false, true))
+		}
+	}
+
+	return nil
 }
