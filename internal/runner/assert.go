@@ -15,6 +15,7 @@ import (
 // RunAssert executes all asserts against all sources.
 func RunAssert(manifest *manifest.Manifest, assert *config.Assert) report.Assert {
 	assertReport := report.Assert{}
+	assertReport.Manifest = manifest.Path
 
 	var output string
 	var passed bool
