@@ -10,6 +10,7 @@ import (
 )
 
 var (
+	// Settings contains environment settings from client initialization.
 	Settings = cli.New()
 )
 
@@ -20,6 +21,7 @@ func debug(format string, v ...interface{}) {
 	}
 }
 
+// GetActionConfig returns the configuration needed to create actions.
 func GetActionConfig() (*action.Configuration, error) {
 	actionConfig := new(action.Configuration)
 
