@@ -213,7 +213,7 @@ func runAssert(cfg *config.Config, chrt *chart.Chart) error {
 		}
 
 		// Select manifests based on test requirements.
-		manifests = manifest.GetManifestsByNames(manifests, test.Select.Files)
+		manifests = manifest.GetManifestsByPaths(manifests, test.Select.Files)
 		manifests = manifest.GetManifestsByKinds(manifests, test.Select.Kinds)
 		manifests = manifest.GetManifestsByAPIVersions(manifests, test.Select.Versions)
 

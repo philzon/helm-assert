@@ -12,10 +12,10 @@ const (
 	keyAPIVersion = "apiVersion"
 )
 
-// GetManifestsByNames returns manifests that matches by provided base filenames.
+// GetManifestsByPaths returns manifests that matches by provided base filenames.
 // This only works for manifests which actually has a filename associated.
 // Anonymous manifests will never match by names.
-func GetManifestsByNames(manifests []Manifest, names []string) []Manifest {
+func GetManifestsByPaths(manifests []Manifest, names []string) []Manifest {
 	if len(names) == 0 {
 		return manifests
 	}
