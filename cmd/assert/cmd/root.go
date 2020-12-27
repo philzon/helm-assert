@@ -240,6 +240,10 @@ func runAssert(cfg *config.Config, chrt *chart.Chart) error {
 		return output.JSON(json, &rep)
 	}
 
+	if rep.Score.Failed > 0 {
+		os.Exit(1)
+	}
+
 	return nil
 }
 
