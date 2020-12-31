@@ -4,9 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"path/filepath"
 	"strings"
-	"time"
 
 	yaml "github.com/goccy/go-yaml"
 	"github.com/sirupsen/logrus"
@@ -14,19 +12,13 @@ import (
 	"helm.sh/helm/v3/pkg/action"
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chart/loader"
-	"helm.sh/helm/v3/pkg/chartutil"
-	"helm.sh/helm/v3/pkg/cli/values"
-	"helm.sh/helm/v3/pkg/engine"
-	"helm.sh/helm/v3/pkg/getter"
 
 	"github.com/philzon/helm-assert/internal/app"
 	"github.com/philzon/helm-assert/internal/log"
-	"github.com/philzon/helm-assert/internal/manifest"
 	"github.com/philzon/helm-assert/internal/output"
 	"github.com/philzon/helm-assert/internal/runner"
 	v3 "github.com/philzon/helm-assert/internal/v3"
 	"github.com/philzon/helm-assert/pkg/config"
-	"github.com/philzon/helm-assert/pkg/report"
 )
 
 var (
@@ -189,134 +181,22 @@ func getChart(chart string) (*chart.Chart, error) {
 }
 
 func runAssert(cfg *config.Config, chrt *chart.Chart) error {
-	rep := report.NewReport()
-	rep.Chart.Name = chrt.Name()
-	rep.Chart.Path = chartPath
-	rep.Chart.Version = chrt.Metadata.Version
-	rep.Chart.Icon = chrt.Metadata.Icon
-	rep.Date = time.Now().Format(time.RFC3339)
-	rep.Score.Total = len(cfg.Tests)
+	rep, err := runner.Run(cfg, chrt)
 
-	for _, test := range cfg.Tests {
-		// Render all manifests with values from test configuration.
-		manifests, err := renderManifests(chrt, &test)
-
-		// Any failures when rendering should put the application to a stop.
-		if err != nil {
-			return err
-		}
-
-		// Any failures when verifying the YAML data should put the application to a stop.
-		err = validateManifests(manifests)
-
-		if err != nil {
-			return err
-		}
-
-		// Select manifests based on test requirements.
-		manifests = manifest.GetManifestsByPaths(manifests, test.Select.Files)
-		manifests = manifest.GetManifestsByKinds(manifests, test.Select.Kinds)
-		manifests = manifest.GetManifestsByAPIVersions(manifests, test.Select.Versions)
-
-		testReport := runner.RunTest(manifests, &test)
-
-		if testReport.Skipped {
-			rep.Score.Skipped++
-		} else {
-			if testReport.Passed {
-				rep.Score.Passed++
-			} else {
-				rep.Score.Failed++
-			}
-		}
-
-		if logLevel != "none" {
-			output.ConsoleSimple(testReport)
-		}
-
-		rep.Tests = append(rep.Tests, testReport)
+	if err != nil {
+		return err
 	}
 
+	// The value set is just a fallback value. This should be overriden to use
+	// whatever path waas used to reference the Helm chart.
+	rep.Chart.Path = chartPath
+
 	if json != "" {
-		return output.JSON(json, &rep)
+		return output.JSON(json, rep)
 	}
 
 	if rep.Score.Failed > 0 {
 		os.Exit(1)
-	}
-
-	return nil
-}
-
-func renderManifests(chrt *chart.Chart, test *config.Test) ([]manifest.Manifest, error) {
-	manifests := make([]manifest.Manifest, 0)
-
-	// Generate values for the rendering engine to use.
-	// This covers for both sets (--set) and values (--values).
-	valueOpts := values.Options{}
-	valueOpts.Values = append(valueOpts.StringValues, test.Sets...)
-	valueOpts.ValueFiles = append(valueOpts.ValueFiles, test.Values...)
-
-	vals, err := valueOpts.MergeValues(getter.All(v3.Settings))
-
-	if err != nil {
-		return manifests, err
-	}
-
-	// Set default release options. This will then result in both values from
-	// Release.Name and Release.Namespace to be set.
-	options := chartutil.ReleaseOptions{
-		Name:      "RELEASE",
-		Namespace: "NAMESPACE",
-	}
-	capabilities := &chartutil.Capabilities{}
-	valuesToRender, err := chartutil.ToRenderValues(chrt, vals, options, capabilities)
-
-	if err != nil {
-		return manifests, err
-	}
-
-	renderedManifests, err := engine.Render(chrt, valuesToRender)
-
-	if err != nil {
-		return manifests, err
-	}
-
-	for name, data := range renderedManifests {
-		// Only accept manifests from files that has YAML extension. This is to also
-		// prevent non-template files, like NOTES.txt, from being parsed as YAML later.
-		ext := filepath.Ext(name)
-
-		if ext != ".yaml" && ext != ".yml" {
-			continue
-		}
-
-		if len(data) != 0 {
-			// Create manifests for each document present in a rendered manifest. These
-			// manifests will still use the same filename from the file they were split
-			// from.
-			//
-			// If there are multiple documents in a single manifest, and contain different
-			// Kubernetes resource kinds, selecting by file will fail the assert, and so
-			// must also be selected by resource kind.
-			documents := manifest.SplitDocument(data)
-
-			for _, document := range documents {
-				manifests = append(manifests, manifest.NewManifestFromData(name, []byte(document)))
-			}
-		}
-	}
-
-	return manifests, nil
-}
-
-func validateManifests(manifests []manifest.Manifest) error {
-	for _, manifest := range manifests {
-		err := yaml.Unmarshal(manifest.Data, new(interface{}))
-
-		if err != nil {
-			return fmt.Errorf("YAML parse error\n%s %s", manifest.Path, yaml.FormatError(err, false, true))
-		}
 	}
 
 	return nil

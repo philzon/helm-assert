@@ -1,10 +1,69 @@
 package runner
 
 import (
+	"time"
+
+	"helm.sh/helm/v3/pkg/chart"
+
 	"github.com/philzon/helm-assert/internal/manifest"
+	"github.com/philzon/helm-assert/internal/output"
 	"github.com/philzon/helm-assert/pkg/config"
 	"github.com/philzon/helm-assert/pkg/report"
 )
+
+// Run takes a config and Helm chart as input, runs through all tests, and returns
+// the report object.
+//
+// On YAML or template rendering errors, it returns an error object without the report.
+func Run(cfg *config.Config, chrt *chart.Chart) (*report.Report, error) {
+	rep := report.NewReport()
+	rep.Chart.Name = chrt.Name()
+	rep.Chart.Version = chrt.Metadata.Version
+	rep.Chart.Icon = chrt.Metadata.Icon
+	rep.Chart.Path = chrt.ChartFullPath()
+	rep.Date = time.Now().Format(time.RFC3339)
+	rep.Score.Total = len(cfg.Tests)
+
+	for _, test := range cfg.Tests {
+		// Render all manifests with values from test configuration.
+		manifests, err := renderManifests(chrt, &test)
+
+		// Any failures when rendering should put the application to a stop.
+		if err != nil {
+			return nil, err
+		}
+
+		// Any failures when verifying the YAML data should put the application to a stop.
+		err = validateManifests(manifests)
+
+		if err != nil {
+			return nil, err
+		}
+
+		// Select manifests based on test requirements.
+		manifests = manifest.GetManifestsByPaths(manifests, test.Select.Files)
+		manifests = manifest.GetManifestsByKinds(manifests, test.Select.Kinds)
+		manifests = manifest.GetManifestsByAPIVersions(manifests, test.Select.Versions)
+
+		testReport := RunTest(manifests, &test)
+
+		if testReport.Skipped {
+			rep.Score.Skipped++
+		} else {
+			if testReport.Passed {
+				rep.Score.Passed++
+			} else {
+				rep.Score.Failed++
+			}
+		}
+
+		output.ConsoleSimple(testReport)
+
+		rep.Tests = append(rep.Tests, testReport)
+	}
+
+	return &rep, nil
+}
 
 // RunTest applies the test configuration to the templates and executes
 // all defined asserts.
