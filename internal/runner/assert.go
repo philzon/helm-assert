@@ -17,19 +17,13 @@ func RunAssert(manifest *manifest.Manifest, assert *config.Assert) report.Assert
 	assertReport := report.Assert{}
 	assertReport.Manifest = manifest.Path
 
-	var output string
-	var passed bool
-
 	if len(strings.TrimSpace(assert.Exist.Key)) > 0 {
-		output, passed = AssertExist(assert.Exist.Key, manifest.Data)
+		assertReport.Output, assertReport.Passed = AssertExist(assert.Exist.Key, manifest.Data)
 	}
 
 	if len(strings.TrimSpace(assert.Equal.Key)) > 0 {
-		output, passed = AssertEqual(assert.Equal.Key, assert.Equal.Value, manifest.Data)
+		assertReport.Output, assertReport.Passed = AssertEqual(assert.Equal.Key, assert.Equal.Value, manifest.Data)
 	}
-
-	assertReport.Output = output
-	assertReport.Passed = passed
 
 	return assertReport
 }
