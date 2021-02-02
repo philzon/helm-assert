@@ -1,0 +1,85 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.15.x
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Initialize
+        run: make init
+      - name: Fetch dependencies
+        run: make dependencies
+      - name: Build darwin-amd64
+        run: make build-darwin-amd64
+      - name: Build linux-amd64
+        run: make build-linux-amd64
+      - name: Build linux-arm64
+        run: make build-linux-arm64
+      - name: Build windows-amd64
+        run: make build-windows-amd64
+      - name: Package
+        run: make package
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Assert ${{ github.ref }}
+          body: |
+            Assert ${{ github.ref }} release.
+
+            See [README.md](https://github.com/philzon/helm-assert/blob/master/README.md) on how to install or update the plugin.
+
+            ## Changelog
+            ### Features
+            ### Changes
+            ### Deprecations
+            ### Bugs
+          draft: true
+          prerelease: false
+      - name: Attach darwin-amd64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          asset_path: ./bin/assert-${{ github.ref }}-darwin-amd64.tar.gz
+          asset_name: assert-${{ github.ref }}-darwin-amd64.tar.gz
+          asset_content_type: application/x-gtar
+      - name: Attach linux-amd64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          asset_path: ./bin/assert-${{ github.ref }}-linux-amd64.tar.gz
+          asset_name: assert-${{ github.ref }}-linux-amd64.tar.gz
+          asset_content_type: application/x-gtar
+      - name: Attach linux-arm64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          asset_path: ./bin/assert-${{ github.ref }}-linux-arm64.tar.gz
+          asset_name: assert-${{ github.ref }}-linux-arm64.tar.gz
+          asset_content_type: application/x-gtar
+      - name: Attach windows-amd64
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./bin/assert-${{ github.ref }}-windows-amd64.zip
+          asset_name: assert-${{ github.ref }}-windows-amd64.zip
+          asset_content_type: application/zip
