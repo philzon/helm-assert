@@ -10,6 +10,7 @@ on:
       - "README.md"
       - "CONTRIBUTING.md"
       - "LICENSE"
+      - "plugin.yaml"
 
 jobs:
   build-linux:
