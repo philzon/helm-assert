@@ -5,7 +5,7 @@
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/philzon/helm-assert?style=flat)](https://github.com/philzon/helm-assert/releases)
 [![GitHub](https://img.shields.io/github/license/philzon/helm-assert?style=flat)](https://github.com/philzon/helm-assert/blob/master/LICENSE)
 
-**assert** is a plugin for [Helm](https://github.com/helm/helm) (or a standalone tool) to verify the Helm chart's rendered manifests.
+**assert** is a plugin for [Helm](https://github.com/helm/helm) to verify the Helm chart's rendered manifests.
 
 ## Features
 
