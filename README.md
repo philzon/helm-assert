@@ -29,8 +29,6 @@
 
 Pre-built binaries for various systems can be found in [Releases](https://github.com/philzon/helm-assert/releases) section.
 
-### Helm
-
 The plugin can be installed using Helm's plugin command:
 
 ```txt
@@ -41,24 +39,6 @@ Using Helm to update the plugin will always fetch the latest version published:
 
 ```txt
 $ helm plugin update assert
-```
-
-### Standalone
-
-It is possible to install as a standalone tool using `make` without requiring the use of Helm.
-This requires that the source has been built, see [Build](#build) section.
-
-The installation path is set to be installed in `/usr/local/bin` by default.
-You can invoke `make INSDIR="/new/install/path" ...` to override its path.
-
-```txt
-# make install
-```
-
-To uninstall the binary:
-
-```txt
-# make uninstall
 ```
 
 ## Build
@@ -81,6 +61,21 @@ To build for different systems, the following targets are available:
 - `build-darwin-amd64` x86 64-bit OSX systems.
 
 Using default target `build` will always build based on the current system.
+
+To install built binaries using `make`:
+
+```txt
+# make install
+```
+
+To uninstall the binary:
+
+```txt
+# make uninstall
+```
+
+The installation path is set to be in `/usr/local/bin` by default.
+You can invoke `make INSDIR="/new/install/path" ...` to override its path.
 
 ## Usage
 
