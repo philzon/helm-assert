@@ -31,7 +31,7 @@ lint:
 
 build:
 	@cp plugin.yaml $(BINDIR)
-	@cp LICENSE $(BINDIR)
+	@cp LICENSE.txt $(BINDIR)
 	@go build -o $(BINDIR)/$(NAME) -ldflags '$(CFLAGS)' cmd/$(NAME)/*.go
 
 build-all: init build-linux-amd64 build-linux-arm64 build-windows-amd64 build-darwin-amd64
@@ -39,25 +39,25 @@ build-all: init build-linux-amd64 build-linux-arm64 build-windows-amd64 build-da
 build-linux-amd64:
 	@mkdir --parent $(BINDIR)/linux-amd64
 	@cp plugin.yaml $(BINDIR)/linux-amd64
-	@cp LICENSE $(BINDIR)/linux-amd64
+	@cp LICENSE.txt $(BINDIR)/linux-amd64
 	@GOOS=linux GOARCH=amd64 go build -o $(BINDIR)/linux-amd64/$(NAME) -ldflags '$(CFLAGS)' cmd/$(NAME)/*.go
 
 build-linux-arm64:
 	@mkdir --parent $(BINDIR)/linux-arm64
 	@cp plugin.yaml $(BINDIR)/linux-arm64
-	@cp LICENSE $(BINDIR)/linux-arm64
+	@cp LICENSE.txt $(BINDIR)/linux-arm64
 	@GOOS=linux GOARCH=arm64 go build -o $(BINDIR)/linux-arm64/$(NAME) -ldflags '$(CFLAGS)' cmd/$(NAME)/*.go
 
 build-windows-amd64:
 	@mkdir --parent $(BINDIR)/windows-amd64
 	@cp plugin.yaml $(BINDIR)/windows-amd64
-	@cp LICENSE $(BINDIR)/windows-amd64
+	@cp LICENSE.txt $(BINDIR)/windows-amd64
 	@GOOS=windows GOARCH=amd64 go build -o $(BINDIR)/windows-amd64/$(NAME).exe -ldflags '$(CFLAGS)' cmd/$(NAME)/*.go
 
 build-darwin-amd64:
 	@mkdir --parent $(BINDIR)/darwin-amd64
 	@cp plugin.yaml $(BINDIR)/darwin-amd64
-	@cp LICENSE $(BINDIR)/darwin-amd64
+	@cp LICENSE.txt $(BINDIR)/darwin-amd64
 	@GOOS=darwin GOARCH=amd64 go build -o $(BINDIR)/darwin-amd64/$(NAME) -ldflags '$(CFLAGS)' cmd/$(NAME)/*.go
 
 test:
