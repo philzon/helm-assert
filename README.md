@@ -19,9 +19,8 @@
 ## Table of Contents
 
 - [Install](#install)
-- [Build](#build)
-- [Usage](#usage)
 - [Documentation](#documentation)
+- [Build](#build)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -41,6 +40,52 @@ Using Helm to update the plugin will always fetch the latest version published:
 
 ```txt
 $ helm plugin update assert
+```
+
+## Documentation
+
+For a detailed overview of the tool, see [docs/DOCUMENTATION.md](./docs/DOCUMENTATION.md) page.
+
+### Quick Start
+
+Test configurations are written in YAML.
+Each test case defines what values to override, which manifests to select, and then, which keys to check and how.
+
+Below configuration tests if manifests, with resource kind `Deployment`, has its **first** container's image changed based on the values overriden using `sets`.
+
+```yaml
+tests:
+  - name: TC_001
+    summary: Test if image is being set
+    sets:
+      - image.repository=nginx
+      - image.tag=latest
+    select:
+      kinds:
+        - Deployment
+    asserts:
+      - equal:
+          key: spec.template.spec.containers[0].image
+          value: nginx:latest
+```
+
+### Usage
+
+Without providing arguments, or adding flag `-h, --help`, will output its usage:
+
+```txt
+Usage:
+  assert [CONFIG] [CHART] [flags]
+
+Flags:
+  -h, --help               help for assert
+      --json string        write report to a file in JSON format
+  -l, --log-level string   severity level to log ("verbose"|"standard"|"quiet"|"none") (default "standard")
+      --password string    chart repository password where to locate the requested chart
+      --repo string        chart repository url where to locate the requested chart
+      --skip stringArray   skip test by name (can specify multiple)
+      --username string    chart repository username where to locate the requested chart
+      --version string     specify the exact chart version to use. If this is not specified, the latest version is used
 ```
 
 ## Build
@@ -78,52 +123,6 @@ To uninstall the binary:
 
 The installation path is set to be in `/usr/local/bin` by default.
 You can invoke `make INSDIR="/new/install/path" ...` to override its path.
-
-## Usage
-
-Without providing arguments, or adding flag `-h, --help`, will output its usage:
-
-```txt
-Usage:
-  assert [CONFIG] [CHART] [flags]
-
-Flags:
-  -h, --help               help for assert
-      --json string        write report to a file in JSON format
-  -l, --log-level string   severity level to log ("verbose"|"standard"|"quiet"|"none") (default "standard")
-      --password string    chart repository password where to locate the requested chart
-      --repo string        chart repository url where to locate the requested chart
-      --skip stringArray   skip test by name (can specify multiple)
-      --username string    chart repository username where to locate the requested chart
-      --version string     specify the exact chart version to use. If this is not specified, the latest version is used
-```
-
-## Documentation
-
-For a detailed overview of the tool, see [docs/DOCUMENTATION.md](./docs/DOCUMENTATION.md) page.
-
-### Quick Start
-
-Test configurations are written in YAML.
-Each test case defines what values to override, which manifests to select, and then, which keys to check and how.
-
-Below configuration tests if manifests, with resource kind `Deployment`, has its **first** container's image changed based on the values overriden using `sets`.
-
-```yaml
-tests:
-  - name: TC_001
-    summary: Test if image is being set
-    sets:
-      - image.repository=nginx
-      - image.tag=latest
-    select:
-      kinds:
-        - Deployment
-    asserts:
-      - equal:
-          key: spec.template.spec.containers[0].image
-          value: nginx:latest
-```
 
 ## Contributing
 
