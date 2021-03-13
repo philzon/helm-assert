@@ -134,5 +134,5 @@ Since the project's design is not finalized, or until a stable, major release ha
 
 ## License
 
-This project licensed under Apache License 2.0.
-See [LICENSE](LICENSE) for the full license details.
+This project is licensed under Apache License 2.0.
+See [LICENSE.txt](LICENSE.txt) for the full license details.
