@@ -84,13 +84,7 @@ Using default target `build` will always build based on the current system.
 
 ## Usage
 
-Running **assert** without providing arguments, or using either `--help, -h` flags, will output its usage.
-
-To access it directly from Helm, if used as a plugin:
-
-```txt
-$ helm assert
-```
+Without providing arguments, or adding flag `-h, --help`, will output its usage:
 
 ```txt
 Usage:
