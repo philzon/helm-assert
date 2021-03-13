@@ -35,6 +35,8 @@ The plugin can be installed using Helm's plugin command:
 $ helm plugin install https://github.com/philzon/helm-assert.git
 ```
 
+Use flag `--version` to install a specific version.
+
 Using Helm to update the plugin will always fetch the latest version published:
 
 ```txt
