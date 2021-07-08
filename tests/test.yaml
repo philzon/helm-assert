@@ -1,22 +1,15 @@
-# This is a YAML-formatted file.
-# This file is used to test the example chart.
-
 tests:
   - name: "TC_UNIT_001"
     summary: "Test selection on file deployment.yaml"
     select:
       files:
         - "deployment.yaml"
-      # Since there are multiple directives used, we have to
-      # sort by resource kind.
       kinds:
         - "Deployment"
     asserts:
       - equal:
           key: "kind"
           value: "Deployment"
-
-###############################################################
 
   - name: "TC_UNIT_002"
     summary: "Test selection on resource kind Deployment"
@@ -28,8 +21,6 @@ tests:
           key: "kind"
           value: "Deployment"
 
-###############################################################
-
   - name: "TC_UNIT_003"
     summary: "Test selection on API version apps/v1"
     select:
@@ -40,8 +31,6 @@ tests:
           key: "apiVersion"
           value: "apps/v1"
 
-###############################################################
-
   - name: "TC_UNIT_004"
     summary: "Test selection on unamed manifests"
     select:
@@ -51,8 +40,6 @@ tests:
       - equal:
           key: "kind"
           value: "ConfigMap"
-
-###############################################################
 
   - name: "TC_UNIT_005"
     summary: "Test fetching balues from arrays"
