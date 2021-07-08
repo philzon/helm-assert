@@ -31,6 +31,4 @@ jobs:
       - name: Unit test
         run: make test
       - name: Functional test
-        run: |
-          ./bin/assert ./tests/assert.yaml ./tests/chart-example;
-          ./bin/assert ./tests/test.yaml ./tests/chart-example
+        run: make functional-test

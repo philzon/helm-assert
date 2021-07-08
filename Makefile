@@ -64,7 +64,7 @@ test:
 	@go test ./...
 
 functional-test:
-	@$(BINDIR)/assert tests/asserts.yaml tests/chart-example/
+	@$(BINDIR)/assert tests/assert.yaml tests/chart-example/
 	@$(BINDIR)/assert tests/test.yaml tests/chart-example/
 
 package:
