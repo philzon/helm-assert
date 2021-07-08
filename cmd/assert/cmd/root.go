@@ -13,7 +13,6 @@ import (
 	"helm.sh/helm/v3/pkg/chart"
 	"helm.sh/helm/v3/pkg/chart/loader"
 
-	"github.com/philzon/helm-assert/internal/app"
 	"github.com/philzon/helm-assert/internal/log"
 	"github.com/philzon/helm-assert/internal/output"
 	"github.com/philzon/helm-assert/internal/runner"
@@ -51,7 +50,8 @@ func dieOnError(err error) {
 
 func newRootCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use: fmt.Sprintf("%s [%s] [%s]", app.Name, "CONFIG", "CHART"),
+		Use:                   "assert [OPTIONS] CONFIG CHART",
+		DisableFlagsInUseLine: true,
 		Run: func(cmd *cobra.Command, args []string) {
 			if len(args) != 2 {
 				cmd.Usage()
