@@ -16,7 +16,7 @@ fullnameOverride: ""
 serviceAccount:
   create: true
   annotations: {}
-  name: ""
+  name: "service-account"
 
 podAnnotations: {}
 

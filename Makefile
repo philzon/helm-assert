@@ -13,7 +13,7 @@ CFLAGS  := -X "$(MODULE)/internal/app.Name=$(NAME)" \
            -s \
            -w \
 
-.PHONY: all init lint build build-linux-amd64 build-linux-arm64 build-windows-amd64 build-darwin-amd64 test package install uninstall
+.PHONY: all init lint build build-linux-amd64 build-linux-arm64 build-windows-amd64 build-darwin-amd64 test functional-test package install uninstall
 
 all: init build
 
@@ -62,6 +62,10 @@ build-darwin-amd64:
 
 test:
 	@go test ./...
+
+functional-test:
+	@$(BINDIR)/assert tests/asserts.yaml tests/chart-example/
+	@$(BINDIR)/assert tests/test.yaml tests/chart-example/
 
 package:
 	@./scripts/package.sh $(BINDIR)

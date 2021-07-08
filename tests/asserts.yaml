@@ -1,0 +1,34 @@
+# Test cases for all assert methods.
+tests:
+  - name: TC_FUNC_ASSERT_EQUAL
+    summary: Test assert method 'equal'
+    select:
+      files:
+        - deployment.yaml
+      kinds:
+        - Deployment
+    asserts:
+      - equal:
+          key: kind
+          value: Deployment
+      - equal:
+          key: spec.template.spec.serviceAccountName
+          value: service-account
+      - equal:
+          key: spec.template.spec.containers[0].name
+          value: chart-example-1
+
+  - name: TC_FUNC_ASSERT_EXIST
+    summary: Test assert method 'exist'
+    select:
+      files:
+        - deployment.yaml
+      kinds:
+        - Deployment
+    asserts:
+      - exist:
+          key: kind
+      - exist:
+          key: spec.template.spec.serviceAccountName
+      - exist:
+          key: spec.template.spec.containers[0].name
