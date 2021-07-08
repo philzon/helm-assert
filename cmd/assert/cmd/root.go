@@ -133,11 +133,8 @@ func initConfig(configPath string, skips []string) (*config.Config, error) {
 		// Enable skip boolean on tests on matching skip flags.
 		_, ok := skipMap[cfg.Tests[i].Name]
 
-		if ok {
-			cfg.Tests[i].Skip = true
-		}
-
 		// Apply global sets and values to tests.
+		cfg.Tests[i].Skip = ok
 		cfg.Tests[i].Sets = append(cfg.Tests[i].Sets, cfg.Sets...)
 		cfg.Tests[i].Values = append(cfg.Tests[i].Values, cfg.Values...)
 	}
