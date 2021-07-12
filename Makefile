@@ -60,7 +60,9 @@ build-darwin-amd64:
 	@cp LICENSE.txt $(BINDIR)/darwin-amd64
 	@GOOS=darwin GOARCH=amd64 go build -o $(BINDIR)/darwin-amd64/$(NAME) -ldflags '$(CFLAGS)' cmd/$(NAME)/*.go
 
-test:
+test: unit-test functional-test
+
+unit-test:
 	@go test ./...
 
 functional-test:
