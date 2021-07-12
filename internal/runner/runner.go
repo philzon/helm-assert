@@ -41,7 +41,7 @@ func Run(cfg *config.Config, chrt *chart.Chart) (*report.Report, error) {
 		}
 
 		// Select manifests based on test requirements.
-		manifests = manifest.GetManifestsByPaths(manifests, test.Select.Files)
+		manifests = manifest.GetManifestsByFiles(manifests, test.Select.Files)
 		manifests = manifest.GetManifestsByKinds(manifests, test.Select.Kinds)
 		manifests = manifest.GetManifestsByAPIVersions(manifests, test.Select.Versions)
 

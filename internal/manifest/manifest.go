@@ -18,7 +18,8 @@ func NewManifest() Manifest {
 	}
 }
 
-// NewManifestFromData creates and returns a new instance of Manifest with its path and data.
+// NewManifestFromData creates and returns a new instance of Manifest with its
+// path and data.
 func NewManifestFromData(path string, data []byte) Manifest {
 	return Manifest{
 		Path: path,
@@ -26,11 +27,24 @@ func NewManifestFromData(path string, data []byte) Manifest {
 	}
 }
 
-// SplitDocument takes a string from a YAML document and attempts to return a slice
-// of strings of the split content if there are directive(s) included.
+// NewManifestsFromData creates and returns a slice of new instances of Manifest if.
+func NewManifestsFromData(path string, data []byte) []Manifest {
+	var manifests []Manifest
+
+	documents := GetDocuments(string(data))
+
+	for _, document := range documents {
+		manifests = append(manifests, NewManifestFromData(path, []byte(document)))
+	}
+
+	return manifests
+}
+
+// GetDocuments takes a string from a YAML document and attempts to return a
+// slice of strings of the split content if there are directive(s) included.
 //
 // https://yaml.org/spec/1.2/spec.html#id2760395
-func SplitDocument(data string) []string {
+func GetDocuments(data string) []string {
 	var documents []string
 	var buffer string
 

@@ -67,11 +67,7 @@ func renderManifests(chrt *chart.Chart, test *config.Test) ([]manifest.Manifest,
 			// If there are multiple documents in a single manifest, and contain different
 			// Kubernetes resource kinds, selecting by file will fail the assert, and so
 			// must also be selected by resource kind.
-			documents := manifest.SplitDocument(data)
-
-			for _, document := range documents {
-				manifests = append(manifests, manifest.NewManifestFromData(name, []byte(document)))
-			}
+			manifests = append(manifests, manifest.NewManifestsFromData(name, []byte(data))...)
 		}
 	}
 
