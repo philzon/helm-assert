@@ -75,7 +75,7 @@ Without providing arguments, or adding flag `-h, --help`, will output its usage:
 
 ```txt
 Usage:
-  assert [CONFIG] [CHART] [flags]
+  assert [OPTIONS] CONFIG CHART
 
 Flags:
   -h, --help               help for assert
