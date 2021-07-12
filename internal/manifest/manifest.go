@@ -27,7 +27,8 @@ func NewManifestFromData(path string, data []byte) Manifest {
 	}
 }
 
-// NewManifestsFromData creates and returns a slice of new instances of Manifest if.
+// NewManifestsFromData creates and returns a slice of new instances of Manifest
+// if the data contains multiple documents.
 func NewManifestsFromData(path string, data []byte) []Manifest {
 	var manifests []Manifest
 
